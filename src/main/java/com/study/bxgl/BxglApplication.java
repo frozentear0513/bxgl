@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.study.bxgl.tbxx.dao")
+@MapperScan("com.study.bxgl.tbxx.mapper")
 public class BxglApplication {
 
     public static void main(String[] args) {

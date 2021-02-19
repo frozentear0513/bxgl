@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.bxgl.tbxx.mapper.TTbxxMapper">
+
+    <resultMap type="com.study.bxgl.tbxx.pojo.TTbxx" id="TTbxxMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="touBaoLeiXin" column="tou_bao_lei_xin" jdbcType="INTEGER"/>
+        <result property="beiBaoRenXingMing" column="bei_bao_ren_xing_ming" jdbcType="VARCHAR"/>
+        <result property="zhengJianLeiXing" column="zheng_jian_lei_xing" jdbcType="INTEGER"/>
+        <result property="zhengJianHaoMa" column="zheng_jian_hao_ma" jdbcType="VARCHAR"/>
+        <result property="lianXiDianHua" column="lian_xi_dian_hua" jdbcType="VARCHAR"/>
+        <result property="touBaoShiJian" column="tou_bao_shi_jian" jdbcType="TIMESTAMP"/>
+        <result property="zongBaoHiJian" column="zong_bao_hi_jian" jdbcType="TIMESTAMP"/>
+        <result property="xingBie" column="xing_bie" jdbcType="INTEGER"/>
+        <result property="shuDi" column="shu_di" jdbcType="VARCHAR"/>
+        <result property="chuShengRiQi" column="chu_sheng_ri_qi" jdbcType="TIMESTAMP"/>
+        <result property="zhengChangHuoLouBao" column="zheng_chang_huo_lou_bao" jdbcType="INTEGER"/>
+        <result property="yuanGongBianMa" column="yuan_gong_bian_ma" jdbcType="VARCHAR"/>
+        <result property="danWeiId" column="dan_wei_id" jdbcType="INTEGER"/>
+        <result property="buMenId" column="bu_men_id" jdbcType="INTEGER"/>
+        <result property="fuQingYuanGongBiaoHao" column="fu_qing_yuan_gong_biao_hao" jdbcType="VARCHAR"/>
+        <result property="muQingYuanGongBiaoHao" column="mu_qing_yuan_gong_biao_hao" jdbcType="VARCHAR"/>
+        <result property="chengBaoQingKuang" column="cheng_bao_qing_kuang" jdbcType="INTEGER"/>
+        <result property="fuQingXingMing" column="fu_qing_xing_ming" jdbcType="VARCHAR"/>
+        <result property="muQingXingMing" column="mu_qing_xing_ming" jdbcType="VARCHAR"/>
+        <result property="fuQingDanWeiId" column="fu_qing_dan_wei_id" jdbcType="INTEGER"/>
+        <result property="muQingDanWeiId" column="mu_qing_dan_wei_id" jdbcType="INTEGER"/>
+        <result property="laoBaoZhengHao" column="lao_bao_zheng_hao" jdbcType="VARCHAR"/>
+        <result property="zhiXiGuanXi" column="zhi_xi_guan_xi" jdbcType="INTEGER"/>
+        <result property="shouBaoRenDiZhi" column="shou_bao_ren_di_zhi" jdbcType="VARCHAR"/>
+        <result property="xiuGaiShiJian" column="xiu_gai_shi_jian" jdbcType="TIMESTAMP"/>
+        <result property="touBaoRenXingMing" column="tou_bao_ren_xing_ming" jdbcType="VARCHAR"/>
+        <result property="zhuangTai" column="zhuang_tai" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Beas_Column_List">
+        id, tou_bao_lei_xin, bei_bao_ren_xing_ming, zheng_jian_lei_xing, zheng_jian_hao_ma, lian_xi_dian_hua, tou_bao_shi_jian, zong_bao_hi_jian, xing_bie, shu_di, chu_sheng_ri_qi, zheng_chang_huo_lou_bao, yuan_gong_bian_ma, dan_wei_id, bu_men_id, fu_qing_yuan_gong_biao_hao, mu_qing_yuan_gong_biao_hao, cheng_bao_qing_kuang, fu_qing_xing_ming, mu_qing_xing_ming, fu_qing_dan_wei_id, mu_qing_dan_wei_id, lao_bao_zheng_hao, zhi_xi_guan_xi, shou_bao_ren_di_zhi, xiu_gai_shi_jian,tou_bao_ren_xing_ming,zhuang_tai
+    </sql>
+
+    <!--查询所有主键和名称-->
+    <select id="chaxun" resultMap="TTbxxMap">
+        select
+            <include refid="Beas_Column_List"/>
+        from bxgl.t_tbxx where zhuang_tai=0
+
+            <if test="zhengJianLeiXing!=null and zhengJianLeiXing!=''">
+                and zheng_jian_lei_xing like "%"#{zhengJianLeiXing}"%"
+            </if>
+            <if test="beiBaoRenXingMing!=null and beiBaoRenXingMing!=''">
+                and bei_bao_ren_xing_ming like "%"#{beiBaoRenXingMing}"%"
+            </if>
+            <if test="zhengJianHaoMa!=null and zhengJianHaoMa!=''">
+                and zheng_jian_hao_mag like "%"#{zhengJianHaoMa}"%"
+            </if>
+            <if test="touBaoShiJian!=null and touBaoShiJian!=''">
+                and tou_bao_shi_jian > #{touBaoShiJian}
+            </if>
+            <if test="touBaoRenXingMing!=null and touBaoRenXingMing!=''">
+                and tou_bao_ren_xing_ming like "%"#{touBaoRenXingMing}"%"
+            </if>
+
+
+        limit #{index},10
+    </select>
+
+    <!--查询单个-->
+<!--    <select id="chaXunById" resultMap="TTbxxMap">-->
+<!--        select-->
+<!--            <include refid="Beas_Column_List"/>-->
+<!--        from bxgl.t_tbxx-->
+<!--        where id = #{id}-->
+<!--    </select>-->
+
+    <!--根据条件查询当前表的满足条件的个数-->
+    <select id="chaXunCount" resultType="int">
+        select
+          count(id)
+        from bxgl.t_tbxx where zhuang_tai=0
+
+            <if test="zhengJianLeiXing!=null and zhengJianLeiXing!=''">
+                and zheng_jian_lei_xing like "%"#{zhengJianLeiXing}"%"
+            </if>
+            <if test="zhengJianHaoMa!=null and zhengJianHaoMa!=''">
+                and zheng_jian_hao_ma like "%"#{zhengJianHaoMa}"%"
+            </if>
+            <if test="beiBaoRenXingMing!=null and beiBaoRenXingMing!=''">
+                and bei_bao_ren_xing_ming like "%"#{beiBaoRenXingMing}"%"
+            </if>
+            <if test="touBaoRenXingMing!=null and touBaoRenXingMing!=''">
+                and tou_bao_ren_xing_ming like "%"#{touBaoRenXingMing}"%"
+            </if>
+            <if test="touBaoShiJian!=null and touBaoShiJian!=''">
+                and tou_bao_shi_jian > #{touBaoShiJian}
+            </if>
+
+
+
+    </select>
+
+<!--    &lt;!&ndash;通过实体作为筛选条件查询&ndash;&gt;-->
+<!--    <select id="chaXunFenYe" resultMap="TTbxxMap">-->
+<!--        select-->
+<!--            <include refid="Beas_Column_List"/>-->
+<!--        from bxgl.t_tbxx-->
+<!--        <where>-->
+<!--            <if test="mingCheng != null and mingCheng != ''">-->
+<!--                mingCheng like "%"#{mingCheng}"%"-->
+<!--            </if>-->
+<!--        </where>-->
+<!--        limit #{xiaBiao},10;-->
+<!--    </select>-->
+
+    <!--新增所有列-->
+    <insert id="xinzeng" parameterType="com.study.bxgl.tbxx.pojo.TTbxx">
+
+        insert into bxgl.t_tbxx(id, tou_bao_lei_xin, bei_bao_ren_xing_ming, zheng_jian_lei_xing, zheng_jian_hao_ma, lian_xi_dian_hua, tou_bao_shi_jian, zong_bao_hi_jian, xing_bie, shu_di, chu_sheng_ri_qi, zheng_chang_huo_lou_bao, yuan_gong_bian_ma, dan_wei_id, bu_men_id, fu_qing_yuan_gong_biao_hao, mu_qing_yuan_gong_biao_hao, cheng_bao_qing_kuang, fu_qing_xing_ming, mu_qing_xing_ming, fu_qing_dan_wei_id, mu_qing_dan_wei_id, lao_bao_zheng_hao, zhi_xi_guan_xi, shou_bao_ren_di_zhi, xiu_gai_shi_jian)
+        values (#{ttbxx.id}, #{ttbxx.touBaoLeiXin}, #{ttbxx.beiBaoRenXingMing}, #{ttbxx.zhengJianLeiXing}, #{ttbxx.zhengJianHaoMa}, #{ttbxx.lianXiDianHua}, #{ttbxx.touBaoShiJian}, #{ttbxx.zongBaoHiJian}, #{ttbxx.xingBie}, #{ttbxx.shuDi}, #{ttbxx.chuShengRiQi}, #{ttbxx.zhengChangHuoLouBao}, #{ttbxx.yuanGongBianMa}, #{ttbxx.danWeiId}, #{ttbxx.buMenId}, #{ttbxx.fuQingYuanGongBiaoHao}, #{ttbxx.muQingYuanGongBiaoHao}, #{ttbxx.chengBaoQingKuang}, #{ttbxx.fuQingXingMing}, #{ttbxx.muQingXingMing}, #{ttbxx.fuQingDanWeiId}, #{ttbxx.muQingDanWeiId}, #{ttbxx.laoBaoZhengHao}, #{ttbxx.zhiXiGuanXi}, #{ttbxx.shouBaoRenDiZhi}, #{ttbxx.xiuGaiShiJian})
+    </insert>
+
+<!--    &lt;!&ndash;通过主键修改数据&ndash;&gt;-->
+<!--    <update id="gengXinById" parameterType="com.study.bxgl.tbxx.pojo.TTbxx">-->
+<!--        update bxgl.t_tbxx-->
+<!--        <set>-->
+<!--            <if test="touBaoLeiXin != null">-->
+<!--                tou_bao_lei_xin = #{touBaoLeiXin},-->
+<!--            </if>-->
+<!--            <if test="beiDanBaoRenXingMing != null and beiDanBaoRenXingMing != ''">-->
+<!--                bei_dan_bao_ren_xing_ming = #{beiDanBaoRenXingMing},-->
+<!--            </if>-->
+<!--            <if test="zhengJianLeiXing != null">-->
+<!--                zheng_jian_lei_xing = #{zhengJianLeiXing},-->
+<!--            </if>-->
+<!--            <if test="zhengJianHaoMa != null and zhengJianHaoMa != ''">-->
+<!--                zheng_jian_hao_ma = #{zhengJianHaoMa},-->
+<!--            </if>-->
+<!--            <if test="lianXiDianHua != null and lianXiDianHua != ''">-->
+<!--                lian_xi_dian_hua = #{lianXiDianHua},-->
+<!--            </if>-->
+<!--            <if test="touBaoShiJian != null">-->
+<!--                tou_bao_shi_jian = #{touBaoShiJian},-->
+<!--            </if>-->
+<!--            <if test="zongBaoHiJian != null">-->
+<!--                zong_bao_hi_jian = #{zongBaoHiJian},-->
+<!--            </if>-->
+<!--            <if test="xingBie != null">-->
+<!--                xing_bie = #{xingBie},-->
+<!--            </if>-->
+<!--            <if test="shuDi != null and shuDi != ''">-->
+<!--                shu_di = #{shuDi},-->
+<!--            </if>-->
+<!--            <if test="chuShengRiQi != null">-->
+<!--                chu_sheng_ri_qi = #{chuShengRiQi},-->
+<!--            </if>-->
+<!--            <if test="zhengChangHuoLouBao != null">-->
+<!--                zheng_chang_huo_lou_bao = #{zhengChangHuoLouBao},-->
+<!--            </if>-->
+<!--            <if test="yuanGongBianMa != null and yuanGongBianMa != ''">-->
+<!--                yuan_gong_bian_ma = #{yuanGongBianMa},-->
+<!--            </if>-->
+<!--            <if test="danWeiId != null">-->
+<!--                dan_wei_id = #{danWeiId},-->
+<!--            </if>-->
+<!--            <if test="buMenId != null">-->
+<!--                bu_men_id = #{buMenId},-->
+<!--            </if>-->
+<!--            <if test="fuQingYuanGongBiaoHao != null and fuQingYuanGongBiaoHao != ''">-->
+<!--                fu_qing_yuan_gong_biao_hao = #{fuQingYuanGongBiaoHao},-->
+<!--            </if>-->
+<!--            <if test="muQingYuanGongBiaoHao != null and muQingYuanGongBiaoHao != ''">-->
+<!--                mu_qing_yuan_gong_biao_hao = #{muQingYuanGongBiaoHao},-->
+<!--            </if>-->
+<!--            <if test="chengBaoQingKuang != null">-->
+<!--                cheng_bao_qing_kuang = #{chengBaoQingKuang},-->
+<!--            </if>-->
+<!--            <if test="fuQingXingMing != null and fuQingXingMing != ''">-->
+<!--                fu_qing_xing_ming = #{fuQingXingMing},-->
+<!--            </if>-->
+<!--            <if test="muQingXingMing != null and muQingXingMing != ''">-->
+<!--                mu_qing_xing_ming = #{muQingXingMing},-->
+<!--            </if>-->
+<!--            <if test="fuQingDanWeiId != null">-->
+<!--                fu_qing_dan_wei_id = #{fuQingDanWeiId},-->
+<!--            </if>-->
+<!--            <if test="muQingDanWeiId != null">-->
+<!--                mu_qing_dan_wei_id = #{muQingDanWeiId},-->
+<!--            </if>-->
+<!--            <if test="laoBaoZhengHao != null and laoBaoZhengHao != ''">-->
+<!--                lao_bao_zheng_hao = #{laoBaoZhengHao},-->
+<!--            </if>-->
+<!--            <if test="zhiXiGuanXi != null">-->
+<!--                zhi_xi_guan_xi = #{zhiXiGuanXi},-->
+<!--            </if>-->
+<!--            <if test="shouBaoRenDiZhi != null and shouBaoRenDiZhi != ''">-->
+<!--                shou_bao_ren_di_zhi = #{shouBaoRenDiZhi},-->
+<!--            </if>-->
+<!--            <if test="xiuGaiShiJian != null">-->
+<!--                xiu_gai_shi_jian = #{xiuGaiShiJian},-->
+<!--            </if>-->
+<!--        </set>-->
+<!--        where id = #{id}-->
+<!--    </update>-->
+
+    <!--通过主键退保-->
+    <update id="tuibao">
+        update bxgl.t_tbxx set zhuang_tai=1 where id = #{id}
+    </update>
+
+</mapper>
