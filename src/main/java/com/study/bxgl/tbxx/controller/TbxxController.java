@@ -82,16 +82,21 @@ public class TbxxController {
     }
     @RequestMapping(value = "/excel", method = RequestMethod.POST)
     public String dataImport(@RequestParam("file") MultipartFile file) {
-
         try {
-
             tbxxService.importData(file.getInputStream());
-
             return "ok";
-
         } catch (Exception e) {
             return "err";
         }
+    }
 
+    @RequestMapping(value = "/excel", method = RequestMethod.GET)
+    public String dataExport() {
+        try {
+            tbxxService.ExportData();
+            return "ok";
+        } catch (Exception e) {
+            return "err";
+        }
     }
 }

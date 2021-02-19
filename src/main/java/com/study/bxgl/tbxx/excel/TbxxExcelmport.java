@@ -15,11 +15,11 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -153,5 +153,41 @@ public class TbxxExcelmport {
             return rawCell.getDateCellValue();
         }
         return rawCell.getStringCellValue();
+    }
+
+    public byte[] writeTbxxsToExcel(List<TTbxx> tbxxs) {
+        try (InputStream in = new FileInputStream(new File("D://学习//投保信息.xls"))) {  //发布时使用
+            HSSFWorkbook workbook = new HSSFWorkbook(in);
+            HSSFSheet sheet = workbook.getSheet("投保信息导出模板");
+            List<String> cols = getCols(sheet.getRow(0));
+            for (int i = 0; i < tbxxs.size(); i++) {
+                TTbxx tbxx = tbxxs.get(i);
+                int newRowIndex = sheet.getLastRowNum() + 1;
+                HSSFRow newRow = sheet.createRow(newRowIndex);
+                for (int j = 0; j < cols.size(); j++) {
+                    String column = Const.RELATTION_COLUMN_TBXX.get(cols.get(j));
+                    // 获取obj类的字节文件对象
+                    Class tbxxClass = tbxx.getClass();
+                    // 获取该类的成员变量
+                    Field f = tbxxClass.getDeclaredField(column);
+                    // 取消语言访问检查
+                    f.setAccessible(true);
+                    // 给变量赋值
+                    Object value = f.get(column);
+                    newRow.createCell(j).setCellValue(getExcelValue(column, value));
+                }
+            }
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            workbook.write(output);
+            workbook.close();
+            return output.toByteArray();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    private String getExcelValue(String column, Object value) {
+        return value.toString();
     }
 }
