@@ -11,6 +11,7 @@ import com.study.bxgl.tbxx.service.TbxxService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.Map;
@@ -74,5 +75,24 @@ public class TbxxController {
     @ApiImplicitParam(name = "id",value = "id",paramType = "query",dataType = "String",required = true)
     public Map<String, Object> tuibao( @RequestParam(name = "id") int id ){
         return tbxxService.tuibao(id);
+    }
+    @PostMapping("/xiugai")
+    @ApiOperation(value = "投保修改接口",notes = "投保信息修改",httpMethod = "POST", response = String.class)
+    public Map<String, Object> xiugai(@RequestBody @ApiParam(name = "ttbxx",value = "TTbxx pojo对象",required = true)  TTbxx ttbxx ){
+        return tbxxService.xinzeng(ttbxx);
+    }
+    @RequestMapping(value = "/excel", method = RequestMethod.POST)
+    public String dataImport(@RequestParam("file") MultipartFile file) {
+
+        try {
+
+            tbxxService.importData(file.getInputStream());
+
+            return "ok";
+
+        } catch (Exception e) {
+            return "err";
+        }
+
     }
 }

@@ -10,6 +10,7 @@ import com.study.bxgl.tbxx.mapper.TTbxxMapper;
 import com.study.bxgl.tbxx.pojo.TTbxx;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,5 +70,8 @@ public class TbxxService{
         map.put("code", 200);
         map.put("msg", "退保成功");
         return map;
+    }
+
+    public void importData(InputStream inputStream) {
     }
 }
