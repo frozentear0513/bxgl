@@ -85,6 +85,16 @@ public interface TTbxxMapper {
      */
     void xinzengAll(List<TTbxx> tbxxes);
 
+    /**
+     * 根据单位名称查询单位ID
+     */
+    int chaXunDanWeiIdByDanWeiMingCheng(String danweimingcheng);
+
+    /**
+     * 根据部门名称查询单位ID
+     */
+    int chaXunBuMenIdByBuMenMingCheng(String bumenmingcheng);
+
     //    /**
 // * 修改数据
 // *

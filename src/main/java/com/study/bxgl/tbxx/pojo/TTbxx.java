@@ -152,16 +152,16 @@ public class TTbxx implements Serializable {
     private String touBaoRenXingMing;
 
     /**
-     * 投保人姓名
+     * 投保状态
      */
     @ApiModelProperty(name = "zhuangTai",notes = "保险状态",dataType = "Integer",required = true)
-    private String zhuangTai;
+    private Integer zhuangTai;
 
-    public String getZhuangTai() {
+    public Integer getZhuangTai() {
         return zhuangTai;
     }
 
-    public void setZhuangTai(String zhuangTai) {
+    public void setZhuangTai(Integer zhuangTai) {
         this.zhuangTai = zhuangTai;
     }
 

@@ -9,10 +9,10 @@ package com.study.bxgl.tbxx.service;
 import com.study.bxgl.tbxx.excel.TbxxExcelmport;
 import com.study.bxgl.tbxx.mapper.TTbxxMapper;
 import com.study.bxgl.tbxx.pojo.TTbxx;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +29,9 @@ public class TbxxService{
 
     @Resource
     private TTbxxMapper ttbxxMapper;
+
+    @Autowired
+    private TbxxExcelmport tbxxExcelmport;
 
     /**
      * 新增数据
@@ -76,7 +79,7 @@ public class TbxxService{
     }
 
     public Map<String, Object> importData(InputStream inputStream) throws IllegalAccessException, NoSuchFieldException, IOException {
-        List<TTbxx> tbxxes = TbxxExcelmport.readListTbxxFromExcel(inputStream);
+        List<TTbxx> tbxxes = tbxxExcelmport.readListTbxxFromExcel(inputStream);
         ttbxxMapper.xinzengAll(tbxxes);
         Map<String, Object> map = new HashMap<>();
         map.put("code", 200);
