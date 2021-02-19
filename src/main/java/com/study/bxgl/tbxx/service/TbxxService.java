@@ -6,12 +6,15 @@
  */
 package com.study.bxgl.tbxx.service;
 
+import com.study.bxgl.tbxx.excel.TbxxExcelmport;
 import com.study.bxgl.tbxx.mapper.TTbxxMapper;
 import com.study.bxgl.tbxx.pojo.TTbxx;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -72,6 +75,12 @@ public class TbxxService{
         return map;
     }
 
-    public void importData(InputStream inputStream) {
+    public Map<String, Object> importData(InputStream inputStream) throws IllegalAccessException, NoSuchFieldException, IOException {
+        List<TTbxx> tbxxes = TbxxExcelmport.readListTbxxFromExcel(inputStream);
+        ttbxxMapper.xinzengAll(tbxxes);
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", 200);
+        map.put("msg", "退保成功");
+        return map;
     }
 }

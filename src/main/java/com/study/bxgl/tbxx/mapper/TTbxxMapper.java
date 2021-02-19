@@ -78,7 +78,14 @@ public interface TTbxxMapper {
 
     void tuibao( @Param("id")int id);
 
-//    /**
+    /**
+     * 新增批量数据
+     *
+     * @param tbxxes 实例对象
+     */
+    void xinzengAll(List<TTbxx> tbxxes);
+
+    //    /**
 // * 修改数据
 // *
 // * @param ttbxx 实例对象

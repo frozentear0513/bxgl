@@ -9,7 +9,6 @@ package com.study.bxgl.tbxx.controller;
 import com.study.bxgl.tbxx.pojo.TTbxx;
 import com.study.bxgl.tbxx.service.TbxxService;
 import io.swagger.annotations.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
